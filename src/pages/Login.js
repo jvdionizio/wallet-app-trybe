@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { emailAction } from '../actions';
+import { Link } from 'react-router-dom';
+import emailAction from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
@@ -18,7 +19,7 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const minPasswordLength = 6;
     const emailFormatRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    if (password.length > minPasswordLength && email.match(emailFormatRegex)) {
+    if (password.length >= minPasswordLength && email.match(emailFormatRegex)) {
       this.setState({
         isButtonDisabled: false,
       });
@@ -60,13 +61,15 @@ class Login extends React.Component {
           onChange={ this.onInputChange }
           value={ password }
         />
-        <button
-          type="button"
-          onClick={ this.handleClick }
-          disabled={ isButtonDisabled }
-        >
-          Entrar
-        </button>
+        <Link to="/carteira">
+          <button
+            type="button"
+            onClick={ this.handleClick }
+            disabled={ isButtonDisabled }
+          >
+            Entrar
+          </button>
+        </Link>
       </div>
     );
   }
