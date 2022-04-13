@@ -15,3 +15,21 @@ export function fetchCurrencies() {
       .then((json) => dispatch(getCurrencies(json)))
   );
 }
+
+function addExpense(json, expense, getState) {
+  const state = getState();
+  const expenseObj = {
+    id: state.wallet.expenses.length,
+    ...expense,
+    exchangeRates: json,
+  };
+  return { type: 'ADD_EXPENSE', payload: expenseObj };
+}
+
+export function expenseAction(expense) {
+  return (dispatch, getState) => (
+    fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((result) => result.json())
+      .then((json) => (dispatch(addExpense(json, expense, getState))))
+  );
+}

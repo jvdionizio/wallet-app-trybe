@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { expenseAction } from '../actions';
 
 class WalletForm extends React.Component {
   constructor() {
@@ -20,6 +21,23 @@ class WalletForm extends React.Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({
       [name]: value,
+    });
+  }
+
+  handleClick = () => {
+    const { valueInput, description, currencieInput, method, tag } = this.state;
+    const { addExpense } = this.props;
+    const expense = {
+      value: valueInput,
+      description,
+      currency: currencieInput,
+      method,
+      tag,
+    };
+    addExpense(expense);
+    this.setState({
+      valueInput: 0,
+      description: '',
     });
   }
 
@@ -132,6 +150,12 @@ class WalletForm extends React.Component {
               value={ description }
             />
           </label>
+          <button
+            type="button"
+            onClick={ this.handleClick }
+          >
+            Adicionar despesas
+          </button>
         </form>
       </div>
     );
@@ -142,9 +166,12 @@ WalletForm.propTypes = {
   currencies: PropTypes.array,
 }.isRequired;
 
+const mapDispatchToProps = (dispatch) => ({
+  addExpense: (expense) => dispatch(expenseAction(expense)),
+});
+
 const mapStateToProps = (store) => ({
-  expenses: store.wallet.expenses,
   currencies: store.wallet.currencies,
 });
 
-export default connect(mapStateToProps)(WalletForm);
+export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
