@@ -33,3 +33,7 @@ export function expenseAction(expense) {
       .then((json) => (dispatch(addExpense(json, expense, getState))))
   );
 }
+
+export function expenseExclude(id) {
+  return { type: 'REMOVE_EXPENSE', id };
+}
