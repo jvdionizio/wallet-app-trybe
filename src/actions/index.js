@@ -18,11 +18,13 @@ export function fetchCurrencies() {
 
 function addExpense(json, expense, getState) {
   const state = getState();
+  console.log(state.wallet.expenses.length);
   const expenseObj = {
-    id: state.wallet.expenses.length,
     ...expense,
+    id: state.wallet.expenses.length,
     exchangeRates: json,
   };
+  console.log(expenseObj);
   return { type: 'ADD_EXPENSE', payload: expenseObj };
 }
 
@@ -36,4 +38,19 @@ export function expenseAction(expense) {
 
 export function expenseExclude(id) {
   return { type: 'REMOVE_EXPENSE', id };
+}
+
+export function expenseEdit(expense) {
+  return { type: 'EDIT_EXPENSE', payload: expense };
+}
+
+export function currentExpenseEdit(key, value) {
+  return { type: 'EDIT_CURRENT_EXPENSE', key, value };
+}
+
+export function editExpenseAction(expense) {
+  return {
+    type: 'EDIT_EXPENSE_ACTION',
+    payload: expense,
+  };
 }

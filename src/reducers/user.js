@@ -10,6 +10,11 @@ const user = (state = INITIAL_STATE, action) => {
       ...state,
       email: action.email,
     };
+  case 'LOGOUT':
+    return {
+      ...state,
+      email: '',
+    };
   default:
     return state;
   }
